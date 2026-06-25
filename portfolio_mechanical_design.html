@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Mechanical Design Engineer</title>
+<title>Fathurrahman — Mechanical Design Engineer Portfolio</title>
+<meta name="description" content="Portfolio Mechanical Design Engineer — spesialis Automation Jig & Fixture Design, SolidWorks, AutoCAD, GD&T. Automotive OEM grade, Mitsubishi supply chain.">
+<meta name="keywords" content="mechanical design engineer, jig fixture design, solidworks, autocad, GDT, automation welding jig, automotive, BIW">
+<meta name="author" content="Moh. Fathurrahman">
+<meta property="og:title" content="Fathurrahman — Mechanical Design Engineer">
+<meta property="og:description" content="Automation Jig & Fixture Design · SolidWorks · AutoCAD · GD&T · Automotive OEM Grade">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0A">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -445,8 +452,54 @@
     font-size: 10px; color: var(--border); letter-spacing: 0.1em;
   }
 
-  /* ─── DIVIDER ─── */
-  .divider { height: 1px; background: var(--border); }
+  /* ─── HAMBURGER MENU ─── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--gray);
+    transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 20px;
+    flex-direction: column;
+    gap: 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray); text-decoration: none;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+    font-family: 'Space Mono', monospace;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--amber); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+  }
 
   /* ─── SCROLL INDICATOR ─── */
   .scroll-hint {
@@ -489,7 +542,19 @@
     <a href="#approach">Approach</a>
     <a href="#gaps">Recommendations</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#competencies" onclick="closeMobileMenu()">Competencies</a>
+  <a href="#projects" onclick="closeMobileMenu()">Projects</a>
+  <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+  <a href="#approach" onclick="closeMobileMenu()">Approach</a>
+  <a href="#gaps" onclick="closeMobileMenu()">Recommendations</a>
+</div>
 
 <!-- HERO -->
 <div class="hero" id="top">
@@ -871,6 +936,47 @@
   </div>
 </section>
 
+<!-- RECOMMENDATIONS / GAPS -->
+<section id="gaps" style="padding-top:0;">
+  <div class="section-header">
+    <span class="section-tag">05</span>
+    <h2 class="section-title">Growth Roadmap</h2>
+  </div>
+  <div class="gap-box">
+    <div class="gap-box-label">CONTINUOUS IMPROVEMENT</div>
+    <div class="gap-grid">
+      <div class="gap-item">
+        <div class="gap-icon">📊</div>
+        <div>
+          <div class="gap-title">FEA / Simulation</div>
+          <div class="gap-text">Memperdalam analisis structural dengan SolidWorks Simulation untuk validasi kekuatan jig dan fixture secara numerik sebelum fabrikasi.</div>
+        </div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-icon">🤖</div>
+        <div>
+          <div class="gap-title">Robot Programming Basics</div>
+          <div class="gap-text">Pemahaman dasar offline programming (OLP) untuk robot Fanuc agar koordinasi dengan tim robot lebih efektif saat commissioning jig.</div>
+        </div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-icon">📋</div>
+        <div>
+          <div class="gap-title">Project Management Tools</div>
+          <div class="gap-text">Mengadopsi tools seperti FMEA dan APQP secara lebih sistematis untuk dokumentasi risiko desain dalam project lifecycle.</div>
+        </div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-icon">🌐</div>
+        <div>
+          <div class="gap-title">Digital Documentation</div>
+          <div class="gap-text">Membangun sistem manajemen drawing dan revision control berbasis digital untuk mempercepat kolaborasi dengan vendor dan tim produksi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <div class="contact-section">
   <div class="contact-cta">
@@ -890,4 +996,66 @@
 </footer>
 
 </body>
+
+<script>
+  // ─── HAMBURGER MENU ───
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // Close menu on outside click
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
+
+  // ─── SKILL BAR ANIMATION ───
+  const skillFills = document.querySelectorAll('.skill-fill');
+  const targets = [];
+  skillFills.forEach(el => {
+    targets.push(el.style.width);
+    el.style.width = '0%';
+  });
+
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        skillFills.forEach((el, i) => {
+          setTimeout(() => { el.style.width = targets[i]; }, i * 60);
+        });
+        skillObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const skillsSection = document.getElementById('skills');
+  if (skillsSection) skillObserver.observe(skillsSection);
+
+  // ─── ACTIVE NAV LINK ───
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--white)' : '';
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+</script>
 </html>
